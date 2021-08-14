@@ -1,11 +1,10 @@
 export default class Rover {
 
-    constructor(gridSize = 100) {
+    constructor(gridSize = 15) {
         this.orientation = 0; // N, E, S, W
         this.position = [0, 0]; // (x, y)
         this.gridSize = gridSize;
         this.obstacles = [];
-
     }
     
     move(command) {

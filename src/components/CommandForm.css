@@ -1,0 +1,30 @@
+
+.command-form input {
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    margin-top: 15px;
+    width: 80%;
+    border: 2px solid #2CB1BF;
+    font-family: Orbitron;
+    line-height: 2;
+}
+
+.command-form button {
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    margin-left: 9px;
+    width: 18%;
+    border: 2px solid #2cb1bf;
+    font-family: Orbitron;
+    line-height: 2;
+    cursor: pointer;
+}
+  
+.command-form button:hover {
+    background: rgb(99,239,255, 0.8);
+}
+
+
+.command-form button:active {
+    background: rgb(99,239,255, 0.2);
+}
