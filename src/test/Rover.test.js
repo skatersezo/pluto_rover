@@ -74,7 +74,21 @@ test('Throws if receives an incorrect command', () => {
     } catch (e) {
         err = e;
     }
-
     expect(err.data).toEqual({ name: 'Command Error', desc: 'An incorrect command found in position 4' });
+});
+
+test('Reports an obstacle encountered and stays the last position available', () => {
+
+    const rover = new Rover(10);
+    rover.obstacles.push([3, 0]);
+    let err = null;
+
+    try {
+        rover.move('RFFFLFFF');
+    } catch (e) {
+        err = e;
+    }
+    expect(err.data).toEqual({ name: 'Obstacle', desc: 'A great obstacle was encountered in [3,0]' });
+    expect(rover.getLocation()).toEqual([[2, 0], 'E']);
 });
 

@@ -4,8 +4,9 @@ export default class Rover {
         this.orientation = 0; // N, E, S, W
         this.position = [0, 0]; // (x, y)
         this.gridSize = gridSize;
-    }
+        this.obstacles = [];
 
+    }
     
     move(command) {
         const commandChain = command.toUpperCase().split('');
@@ -37,6 +38,7 @@ export default class Rover {
         }
         
         if ((command === 'F' && this.orientation === 0) || (command === 'B' && this.orientation === 2)) {
+            this.checkObstaclesAhead([this.position[0], this.position[1] + 1]);
             this.position[1]++;
             if (this.position[1] > this.gridSize) {
                 this.position[1] = 0;
@@ -44,6 +46,7 @@ export default class Rover {
         }
         
         if ((command === 'B' && this.orientation === 0) || (command === 'F' && this.orientation === 2)) {
+            this.checkObstaclesAhead([this.position[0], this.position[1] - 1]);
             this.position[1]--;
             if (this.position[1] < 0) {
                 this.position[1] = this.gridSize;
@@ -51,6 +54,7 @@ export default class Rover {
         }
 
         if ((command === 'F' && this.orientation === 1) || (command === 'B' && this.orientation === 3)) {
+            this.checkObstaclesAhead([this.position[0] + 1, this.position[1]]);
             this.position[0]++;
             if (this.position[0] > this.gridSize) {
                 this.position[0] = 0;
@@ -58,11 +62,25 @@ export default class Rover {
         }
         
         if ((command === 'B' && this.orientation === 1) || (command === 'F' && this.orientation === 3)) {
+            this.checkObstaclesAhead([this.position[0] - 1, this.position[1]]);
             this.position[0]--;
             if (this.position[0] < 0) {
                 this.position[0] = this.gridSize;
             }
         }
+    }
+
+    checkObstaclesAhead(position) {
+        this.obstacles.forEach(obs => {
+            if (obs.every((val, index) => val === position[index])) {
+                const obstacleError = new Error();
+                obstacleError.data = {
+                    name: 'Obstacle',
+                    desc: `A great obstacle was encountered in [${obs}]`
+                };
+                throw obstacleError;
+            }
+        });
     }
 
     getLocation() {
