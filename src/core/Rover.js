@@ -5,6 +5,7 @@ export default class Rover {
         this.position = [0, 0]; // (x, y)
         this.gridSize = gridSize;
         this.obstacles = this.loadObstacles(gridSize, 20);
+        this.obstaclesFound = [];
     }
     
     move(command) {
@@ -77,6 +78,7 @@ export default class Rover {
                     name: 'Obstacle',
                     desc: `A great obstacle was encountered in [${obs}]`
                 };
+                this.obstaclesFound.push(obs);
                 throw obstacleError;
             }
         });

@@ -3,11 +3,13 @@ import { useState } from 'react';
 import CommandForm from './CommandForm';
 import Rover from '../core/Rover';
 import Square from './Square';
+import ErrorModal from './ErrorModal';
 
 export default function Pluto() {
 
     const [rover, setRover] = useState(new Rover());
     const [planetRows, setPlanetRows] = useState(generatePlanetGrid(rover));
+    const [error, setError] = useState();
     
     const loadCommands = (commands) => {
         try {
@@ -15,14 +17,21 @@ export default function Pluto() {
             setRover(rover);
             setPlanetRows(generatePlanetGrid(rover));
         } catch (err) {
+            setError({
+                title: err.data.name,
+                message: err.data.desc
+            });
             setPlanetRows(generatePlanetGrid(rover));
-            console.log(err.data.name);
-            console.log(err.data.desc);
         }
     };
 
+    const errorHandler = () => {
+        setError(null);
+    }
+
     return (
         <div className="pluto">
+            {error && <ErrorModal title={error.title} message={error.message} onDismiss={errorHandler} />}
             {planetRows}
             <CommandForm onLoadCommands={loadCommands} />
         </div>
