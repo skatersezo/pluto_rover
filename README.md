@@ -1,5 +1,8 @@
-# Getting Started with Create React App
+# Pluto landing!
 
+NASA has landed a rover in Pluto's surface, and this app is the human interface to control the rover. Pluto's surface is represented by a grid of 15x15 where each square is composed by horizontal coordinate (x), and vertical coordinate (y), being the bottom left square (0,0), the one above (0, 1), the one on the left (1, 0), etc. 
+Your mission is to explore Pluto's by using the command input in the panel. You can only introduce simple commands such as F (for forward), B (for backward), L (for left), and R (for right). L and R commands spin the rover while F and B move it forwards and backward, respectively. 
+While inspecting the surface you might encounter an obstacle, if that happens, the rover will stop inmediately and report a notification, after that you'll be able to proceed with the navigation.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
