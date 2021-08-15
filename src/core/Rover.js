@@ -4,12 +4,12 @@ export default class Rover {
         this.orientation = 0; // N, E, S, W
         this.position = [0, 0]; // (x, y)
         this.gridSize = gridSize;
-        this.obstacles = [];
+        this.obstacles = this.loadObstacles(gridSize, 20);
     }
     
     move(command) {
         const commandChain = command.toUpperCase().split('');
-        const incorrectCommand = commandChain.findIndex(i => /[^FBLRfblr]/g.test(i));
+        const incorrectCommand = commandChain.findIndex(i => /[^FBLR]/g.test(i));
         if (incorrectCommand > -1) {
             const commandError = new Error();
             commandError.data = {
@@ -80,6 +80,16 @@ export default class Rover {
                 throw obstacleError;
             }
         });
+    }
+
+    loadObstacles(gridSize, obstaclesAmount) {
+        const obstacles = [];
+        for (let i = 0; i < obstaclesAmount; i++) {
+            const x = Math.floor(Math.random() * gridSize);
+            const y = Math.floor(Math.random() * gridSize);
+            obstacles.push([x, y]);
+        }
+        return obstacles;
     }
 
     getLocation() {

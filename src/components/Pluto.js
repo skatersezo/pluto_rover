@@ -1,39 +1,42 @@
 
+import { useState } from 'react';
 import CommandForm from './CommandForm';
 import Rover from '../core/Rover';
 import Square from './Square';
 
 export default function Pluto() {
 
-    const rover = new Rover();
-    const gridSize = rover.gridSize;
-
-    rover.obstacles = generateObstacles(gridSize, 20);
-
-    const planetRows = [];
-    for (let i = gridSize - 1; i >= 0; i--) {
-        const planetColumns = [];
-        for (let j = 0; j < gridSize; j++) {
-            planetColumns.push(<Square key={`${j}${i}`} coor={[j,i]} rover={rover} />)
+    const [rover, setRover] = useState(new Rover());
+    const [planetRows, setPlanetRows] = useState(generatePlanetGrid(rover));
+    
+    const loadCommands = (commands) => {
+        try {
+            rover.move(commands);
+            setRover(rover);
+            setPlanetRows(generatePlanetGrid(rover));
+        } catch (err) {
+            setPlanetRows(generatePlanetGrid(rover));
+            console.log(err.data.name);
+            console.log(err.data.desc);
         }
-        planetRows.push(<div key={i} className={`row-${i}`}>{planetColumns}</div>);
-    }
+    };
 
     return (
         <div className="pluto">
             {planetRows}
-            <CommandForm />
+            <CommandForm onLoadCommands={loadCommands} />
         </div>
     );
 };
 
-function generateObstacles(gridSize, obstaclesAmount) {
-
-    const obstacles = [];
-    for (let i = 0; i < obstaclesAmount; i++) {
-        const x = Math.floor(Math.random() * gridSize);
-        const y = Math.floor(Math.random() * gridSize);
-        obstacles.push([x, y]);
+function generatePlanetGrid(rover) {
+    const planetRows = [];
+    for (let i = rover.gridSize - 1; i >= 0; i--) {
+        const planetColumns = [];
+        for (let j = 0; j < rover.gridSize; j++) {
+            planetColumns.push(<Square key={`${j}${i}`} coor={[j,i]} rover={rover} />)
+        }
+        planetRows.push(<div key={i} className={`row-${i}`}>{planetColumns}</div>);
     }
-    return obstacles;
+    return planetRows;
 }
