@@ -11,3 +11,8 @@
     text-align: center;
     width: 39px;
 }
+
+.square img {
+    height: 35px;
+    width: 35px;
+}

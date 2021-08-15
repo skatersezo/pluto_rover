@@ -11,13 +11,12 @@ export default function Pluto() {
     rover.obstacles = generateObstacles(gridSize, 20);
 
     const planetRows = [];
-
     for (let i = gridSize - 1; i >= 0; i--) {
         const planetColumns = [];
         for (let j = 0; j < gridSize; j++) {
-            planetColumns.push(<Square coordinates={[j, i]} />)
+            planetColumns.push(<Square key={`${j}${i}`} coor={[j,i]} rover={rover} />)
         }
-        planetRows.push(<div className={`row-${i}`}>{planetColumns}</div>);
+        planetRows.push(<div key={i} className={`row-${i}`}>{planetColumns}</div>);
     }
 
     return (
